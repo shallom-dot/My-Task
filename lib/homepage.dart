@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:my_task/screens/calender_screen.dart';
-import 'package:my_task/screens/drawer_screen.dart';
+//import 'package:my_task/screens/drawer_screen.dart';
 import 'package:my_task/screens/task_screen.dart';
 import 'package:my_task/screens/user_screen.dart';
+import 'package:my_task/utilities/hidden_drawer.dart';
 
 class MyWidget extends StatefulWidget {
   const MyWidget({super.key});
@@ -16,12 +17,12 @@ class _MyWidgetState extends State<MyWidget> {
   
 
   final List<Widget> _screens = [
+    const HiddenDrawer(),
     const MyTask(),
     const MyCalender(),
-    const MyUser(),
-    const MyDrawer()
+     const MyUser(),
   ];
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
