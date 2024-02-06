@@ -1,23 +1,57 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:my_task/new.dart';
-// ignore: depend_on_referenced_packages
-import 'package:page_transition/page_transition.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:my_task/screens/calender_screen.dart';
+import 'package:my_task/screens/drawer_screen.dart';
+import 'package:my_task/screens/task_screen.dart';
+import 'package:my_task/screens/user_screen.dart';
 
-
-
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
 
   @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  
+
+  final List<Widget> _screens = [
+    const MyTask(),
+    const MyCalender(),
+    const MyUser(),
+    const MyDrawer()
+  ];
+  int _currentIndex = 0;
+  @override
   Widget build(BuildContext context) {
-    return AnimatedSplashScreen(splash: Lottie.asset('assets/loading.json'),
-    nextScreen: const MyWidget(),
-    splashIconSize: 150,
-    duration: 3000,
-    splashTransition: SplashTransition.sizeTransition,
-    pageTransitionType: PageTransitionType.leftToRightWithFade,
-    animationDuration: const Duration(seconds: 50),);
+    return  Scaffold(
+      body: _screens[_currentIndex],
+      bottomNavigationBar:
+        Container(
+          color: Colors.black,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+            child: GNav(
+              backgroundColor: Colors.black,
+              color: Colors.white,
+              activeColor: Colors.white,
+              tabBackgroundColor: Colors.amber,
+              gap: 8,
+              
+              padding: const EdgeInsets.all(16),
+              tabs: const [
+                GButton(icon: Icons.subject, text: 'Drawer'),
+                GButton(icon: Icons.task, text:'Tasks'),
+                GButton(icon: Icons.calendar_month, text: 'Calender'),
+                GButton(icon: Icons.manage_accounts, text: 'User'),
+              ],
+           selectedIndex: _currentIndex,
+          onTabChange: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+               ) ),
+        ));
   }
 }
